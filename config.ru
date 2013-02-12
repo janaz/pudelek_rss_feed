@@ -1,4 +1,4 @@
-require './my_app'
+require File.expand_path('app/pudelek', File.dirname(__FILE__))
 
-run MyApp.new
+run PudelekRSSFeed::Pudelek.new
 
