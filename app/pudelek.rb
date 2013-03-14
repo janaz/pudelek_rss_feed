@@ -31,7 +31,7 @@ Cache Size = #{Utils::PageCache.count}
               xml.link(:type => "text/html", :rel => "alternate", :href => e.url)
               xml.id e.article_id
               xml.updated e.time.strftime('%Y-%m-%dT%H:%M:%S%z')
-              xml.content e.content
+              xml.content e.content, :type => 'html'
               xml.author {
                 xml.name 'pudelek.pl'
               }
