@@ -7,23 +7,22 @@ module Utils
 
     include DataMapper::Resource
 
-    property :shakey, String, :length => 64, :key => true
+    property :cachekey, String, :length => 255, :key => true
     property :content, Text
     property :created_at, DateTime
 
     class << self
 
       def retrieve key
-        shakey = sha(key)
-        page_cache = PageCache.get(shakey)
+
+        page_cache = PageCache.get(key)
         puts page_cache.inspect
         if (page_cache.nil?)
           page_cache = PageCache.create(
             :content => encode(yield),
-            :shakey => shakey,
+            :cachekey => key,
             :created_at => Time.now
           )
-          #page_cache.save!
         end
         decode(page_cache.content)
       end
@@ -46,16 +45,13 @@ module Utils
       end
 
       def encode(string)
+        return nil if string.nil?
         Base64.encode64(deflate(string))
       end
 
       def decode(string)
+        return nil if string.nil?
         inflate(Base64.decode64(string))
-      end
-
-      def sha key
-        d = Digest::SHA2.new(256) << key
-        d.to_s
       end
     end
   end

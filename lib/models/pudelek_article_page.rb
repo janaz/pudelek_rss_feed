@@ -21,21 +21,25 @@ module PudelekRSSFeed
     end
 
     def time
-      el = page.css('.content .time')
-      if el.first
-        time_str = el.attr('datetime')
-        DateTime.strptime("#{time_str} CET", '%Y-%m-%d %Z').to_time rescue nil
+      time_str = Utils::PageCache.retrieve("#{url}-time") do
+        el = page.css('.content .time')
+        if el.first
+          time_str = el.attr('datetime')
+        end
       end
+      DateTime.strptime("#{time_str} CET", '%Y-%m-%d %Z').to_time rescue nil
     end
 
     def content
-      el = if video?
-             page.css('.single-article .single-article-text')
-           else
-             page.css('.content .single-entry-text')
-           end
-      el.css('script').remove
-      el.to_html
+      Utils::PageCache.retrieve("#{url}-content") do
+        el = if video?
+               page.css('.single-article .single-article-text')
+             else
+               page.css('.content .single-entry-text')
+             end
+        el.css('script').remove
+        el.to_html
+      end
     end
 
     def video?
@@ -53,9 +57,7 @@ module PudelekRSSFeed
     end
 
     def fetch
-      @html ||= Utils::PageCache.retrieve(url) do
-        Net::HTTP.get_response(URI.parse(url)).body
-      end
+      @html ||= Net::HTTP.get_response(URI.parse(url)).body
     end
   end
 end
