@@ -8,6 +8,14 @@ module PudelekRSSFeed
       rss
     end
 
+    get '/healthcheck' do
+      content_type 'text/plain', :charset => 'utf-8'
+      <<-EOF
+DATABASE_URL=#{ENV['DATABASE_URL']}
+Cache Size = #{Utils::PageCache.count}
+      EOF
+    end
+
     private
 
     def rss
