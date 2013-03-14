@@ -1,6 +1,5 @@
 require 'sinatra/base'
 require 'nokogiri'
-require File.expand_path('../lib/models/pudelek_main_page', File.dirname(__FILE__))
 
 module PudelekRSSFeed
   class Pudelek < Sinatra::Base

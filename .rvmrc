@@ -1,1 +1,1 @@
-rvm --create use ruby-1.9.3@pudelek
+rvm --create use ruby-2.0.0@pudelek

@@ -1,20 +1,31 @@
 require 'digest/sha2'
 require 'zlib'
+require 'base64'
 
 module Utils
   class PageCache
-    CACHE_ROOT = File.expand_path('../../cache', File.dirname(__FILE__))
+
+    include DataMapper::Resource
+
+    property :shakey, String, :length => 64, :key => true
+    property :content, Text
+    property :created_at, DateTime
+
     class << self
 
       def retrieve key
-        cache_file = File.join(CACHE_ROOT, sha(key))
-        if !File.exist?(cache_file)
-          data = yield
-          File.open(cache_file, "w") { |f| f << deflate(data) } if data
-          data
-        else
-          inflate(File.read(cache_file))
+        shakey = sha(key)
+        page_cache = PageCache.get(shakey)
+        puts page_cache.inspect
+        if (page_cache.nil?)
+          page_cache = PageCache.create(
+            :content => encode(yield),
+            :shakey => shakey,
+            :created_at => Time.now
+          )
+          #page_cache.save!
         end
+        decode(page_cache.content)
       end
 
 
@@ -32,6 +43,14 @@ module Utils
         zstream.finish
         zstream.close
         buf
+      end
+
+      def encode(string)
+        Base64.encode64(deflate(string))
+      end
+
+      def decode(string)
+        inflate(Base64.decode64(string))
       end
 
       def sha key

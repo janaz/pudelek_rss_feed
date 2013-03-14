@@ -1,5 +1,3 @@
-require File.expand_path('pudelek_article_page', File.dirname(__FILE__))
-
 module PudelekRSSFeed
   class PudelekArticle
 
@@ -50,3 +48,4 @@ module PudelekRSSFeed
 
   end
 end
+

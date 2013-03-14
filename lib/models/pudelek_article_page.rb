@@ -1,7 +1,6 @@
 require 'nokogiri'
 require 'net/http'
 require 'date'
-require File.expand_path('../utils/page_cache', File.dirname(__FILE__))
 
 module PudelekRSSFeed
   class PudelekArticlePage
