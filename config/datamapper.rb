@@ -1,6 +1,6 @@
 require 'data_mapper'
 
-DataMapper::Logger.new($stdout, :debug)
+DataMapper::Logger.new($stdout, :error)
 DataMapper.setup(:default, ENV['DATABASE_URL'])
 
 require File.expand_path("../lib/models", File.dirname(__FILE__))
