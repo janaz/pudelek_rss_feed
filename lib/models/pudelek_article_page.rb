@@ -24,7 +24,7 @@ module PudelekRSSFeed
       time_str = Utils::PageCache.retrieve("#{url}-time") do
         el = page.css('.content .time')
         if el.first
-          time_str = el.attr('datetime')
+          el.attr('datetime')
         end
       end
       DateTime.strptime("#{time_str} CET", '%Y-%m-%d %Z').to_time rescue nil
@@ -43,7 +43,8 @@ module PudelekRSSFeed
     end
 
     def video?
-      url =~ /pudelek.tv\/video\//
+      match = /pudelek.tv\/video\//.match(url)
+      !(match.nil?)
     end
 
     def article_id
