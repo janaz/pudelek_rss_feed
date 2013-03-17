@@ -14,7 +14,6 @@ module Utils
     class << self
 
       def retrieve key
-
         page_cache = PageCache.get(key)
         puts page_cache.inspect
         if (page_cache.nil?)

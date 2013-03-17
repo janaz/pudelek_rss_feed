@@ -21,7 +21,7 @@ module PudelekRSSFeed
     end
 
     def time
-      time_str = Utils::PageCache.retrieve("#{url}-time") do
+      time_str = from_cache("#{url}-time") do
         el = page.css('.content .time')
         if el.first
           el.attr('datetime')
@@ -31,7 +31,7 @@ module PudelekRSSFeed
     end
 
     def content
-      Utils::PageCache.retrieve("#{url}-content") do
+      from_cache("#{url}-content") do
         el = if video?
                page.css('.single-article .single-article-text')
              else
@@ -52,6 +52,15 @@ module PudelekRSSFeed
     end
 
     private
+
+    def cache_class
+      Utils::PageCache
+    end
+
+    def from_cache(key)
+      raise 'need block' unless block_given?
+      cache_class.retrieve(key) { yield }
+    end
 
     def page
       @page ||= Nokogiri::HTML(fetch)

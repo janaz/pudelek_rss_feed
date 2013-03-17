@@ -1,5 +1,6 @@
 module PudelekRSSFeed
   class PudelekArticle
+    include Comparable
 
     class << self
 
@@ -18,6 +19,10 @@ module PudelekRSSFeed
       @time = params[:time]
     end
 
+    def <=> other
+      time <=> other.time
+    end
+
     def time
       @time || article_page.time || Time.now
     end
@@ -28,16 +33,6 @@ module PudelekRSSFeed
 
     def article_id
       article_page.article_id
-    end
-
-    def to_hash
-      {
-          :url => url,
-          :title => title,
-          :time => time,
-          :article_id => article_id,
-          :content => content
-      }
     end
 
     private

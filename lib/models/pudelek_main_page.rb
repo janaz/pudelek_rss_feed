@@ -11,14 +11,14 @@ module PudelekRSSFeed
     end
 
     def all
-      (articles + foto_stories).sort{|a,b| -(a.time <=> b.time)}
+      articles + photo_stories
     end
 
     def articles
       page.css('.content .news .entry').map { |entry| create_article(entry) }
     end
 
-    def foto_stories
+    def photo_stories
       page.css('.photo-main ul li a').map { |entry| create_photo_story(entry) }
     end
 
