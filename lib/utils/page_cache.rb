@@ -15,7 +15,6 @@ module Utils
 
       def retrieve key
         page_cache = PageCache.get(key)
-        puts page_cache.inspect
         if (page_cache.nil?)
           page_cache = PageCache.create(
             :content => encode(yield),
