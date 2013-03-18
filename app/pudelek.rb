@@ -15,17 +15,11 @@ module PudelekRSSFeed
       content_type 'text/plain', :charset => 'utf-8'
       <<-EOF
 Cache Size = #{Utils::PageCache.count}
+RACK_ENV = #{ENV['RACK_ENV']}
       EOF
     end
 
     private
-
-    def to_rfc3339 time
-      base = time.strftime('%Y-%m-%dT%H:%M:%S')
-      tz = time.strftime('%z')
-      tz_rfc = "#{tz[0..2]}:#{tz[3..4]}"
-      "#{base}#{tz_rfc}"
-    end
 
     def articles
       PudelekRSSFeed::PudelekMainPage.new.all.sort.reverse[0..(RSS_ENTRIES-1)]
@@ -37,13 +31,13 @@ Cache Size = #{Utils::PageCache.count}
           xml.link(:href => "http://www.pudelek.pl/", :rel => 'self')
           xml.title 'Pudelek by Janaz'
           xml.id "http://www.pudelek.pl/"
-          xml.updated to_rfc3339(Time.now)
+          xml.updated Time.now.to_rfc3339
           articles.each do |e|
             xml.entry {
               xml.title  e.title
               xml.link(:type => "text/html", :rel => "alternate", :href => e.url)
               xml.id e.article_id
-              xml.updated to_rfc3339(e.time)
+              xml.updated e.time.to_rfc3339
               xml.content e.content, :type => 'html'
               xml.author {
                 xml.name 'pudelek.pl'
