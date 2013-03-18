@@ -12,4 +12,5 @@ gem 'dm-postgres-adapter'
 group :test, :development do
   gem 'rspec'
   gem 'dm-mysql-adapter'
+  gem 'rack-test'
 end
