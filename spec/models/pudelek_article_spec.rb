@@ -20,12 +20,12 @@ describe PudelekRSSFeed::PudelekArticle do
 
   describe "#time" do
     it "should return the time provided in init params" do
-      subject.time.should == Time.new(2009, 2, 14, 10, 31, 30, "+11:00")
+      subject.time.should == Time.new(2009, 2, 13, 23, 31, 30, "+00:00")
     end
     context "time not provided in init params" do
       let(:article_time) {nil}
       it "should return the time from the article page" do
-        subject.time.should == Time.new(2009, 2, 14, 10, 48, 10, "+11:00")
+        subject.time.should == Time.new(2009, 2, 13, 23, 48, 10, "+00:00")
       end
 
     end

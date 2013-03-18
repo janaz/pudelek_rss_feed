@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe PudelekRSSFeed::PudelekArticlePage do
@@ -18,7 +19,7 @@ describe PudelekRSSFeed::PudelekArticlePage do
     p
   end
 
-  its(:time) {should == Time.new(2013, 2, 10, 10, 0, 0, "+11:00")}
+  its(:time) {should == Time.new(2013, 2, 9, 23, 0, 0, '+00:00')}
   its(:article_id) {should == 'http://www.pudelek.pl/artykul/12345'}
 
   context "normal page" do
