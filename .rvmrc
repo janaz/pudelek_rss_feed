@@ -1,1 +1,1 @@
-rvm --create use ruby-2.0.0@pudelek
+rvm --create use jruby-1.7.3@pudelek
