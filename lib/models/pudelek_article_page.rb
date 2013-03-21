@@ -38,6 +38,7 @@ module PudelekRSSFeed
                page.css('.content .single-entry-text')
              end
         el.css('script').remove
+        el.css('object').remove
         el.to_html
       end
     end
