@@ -19,7 +19,7 @@ describe PudelekRSSFeed::PudelekArticlePage do
     p
   end
 
-  its(:time) {should == Time.new(2013, 2, 9, 23, 0, 0, '+00:00')}
+  its(:time) {should == Time.utc(2013, 2, 9, 23, 0, 0)}
   its(:article_id) {should == 'http://www.pudelek.pl/artykul/12345'}
 
   context "normal page" do
