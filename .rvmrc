@@ -1,1 +1,1 @@
-rvm --create use ruby-2.0.0@pudelek
+rvm --create use rbx-head-d19@pudelek
