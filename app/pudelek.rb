@@ -4,7 +4,7 @@ require 'nokogiri'
 module PudelekRSSFeed
   class Pudelek < Sinatra::Base
 
-    RSS_ENTRIES = 20
+    RSS_ENTRIES = 50
 
     get '/' do
       content_type 'application/atom+xml', :charset => 'utf-8'
