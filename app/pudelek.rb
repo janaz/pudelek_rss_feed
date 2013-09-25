@@ -15,6 +15,7 @@ module PudelekRSSFeed
       content_type 'text/plain', :charset => 'utf-8'
       <<-EOF
 Cache Size = #{Utils::PageCache.count}
+Old records = #{Utils::PageCache.all(:created_at.lt => (Time.now - 24*3600*90)).count}
 RACK_ENV = #{ENV['RACK_ENV']}
       EOF
     end
