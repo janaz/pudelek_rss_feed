@@ -15,7 +15,7 @@ module PudelekRSSFeed
 
     def initialize params
       @url = params[:url]
-      @title = params[:title]
+      @title = params[:title].to_s.strip
       @time = params[:time]
     end
 
