@@ -20,6 +20,12 @@ RACK_ENV = #{ENV['RACK_ENV']}
       EOF
     end
 
+    get '/delete_cache' do
+      content_type 'text/plain', :charset => 'utf-8'
+      Utils::PageCache.all(:created_at.lt => (Time.now - 24*3600*90)).destroy
+      'ok'
+    end
+
     private
 
     def articles
